@@ -1,0 +1,18 @@
+<testSet>
+    <nthPercRespTimeTest>
+        <testName>T01_Login - 90 Percentile response time</testName>
+        <description>Verify 90th percentile</description>
+        <transactionName>T01_Login</transactionName>
+        <regexp/>
+        <percentile>90</percentile>
+        <maxRespTime>3500</maxRespTime>
+    </nthPercRespTimeTest>
+    <nthPercRespTimeTest>
+        <testName>T02_Logout - 90 Percentile response time</testName>
+        <description>Verify 90th percentile</description>
+        <transactionName>T02_Logout</transactionName>
+        <regexp/>
+        <percentile>90</percentile>
+        <maxRespTime>1500</maxRespTime>
+    </nthPercRespTimeTest> 
+</testSet>

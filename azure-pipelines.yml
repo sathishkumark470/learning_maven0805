@@ -1,0 +1,37 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  MAVEN_OPTS: '-Xmx1024m'
+
+stages:
+- stage: PerformanceTest
+  jobs:
+  - job: PerformanceTest
+    steps:
+    - task: Maven@3
+      inputs:
+        mavenPomFile: 'pom.xml'
+        goals: 'clean compile verify -DJmeterScript=learning'
+
+    - task: Maven@3
+      inputs:
+        mavenPomFile: 'pom.xml'
+        goals: 'pre-site'
+        options: '-DtrimStackTrace=false'
+      condition: always()
+
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: 'target/jmeter/results'
+        artifact: 'JMeterResults'
+      condition: always()
+
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: 'junit.xml'
+      condition: always()
