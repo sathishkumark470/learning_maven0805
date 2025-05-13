@@ -1,36 +1,146 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>project</groupId>
-    <artifactId>myproject</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
- 
-    <build>
-        <plugins>
-            <!-- JMeter Plugin for Running Tests -->
-            <plugin>
-                <groupId>com.lazerycode.jmeter</groupId>
-                <artifactId>jmeter-maven-plugin</artifactId>
-                <version>2.9.0</version>
-                <configuration>
-                    <resultsFileFormat>csv</resultsFileFormat>
-                    <testResultsTimestamp>true</testResultsTimestamp> 
-                    <resultsDirectory>${project.basedir}/target/jmeter/results</resultsDirectory>
-                    <generateReports>true</generateReports>
-                    <reportDirectory>${project.basedir}/target/jmeter/reports</reportDirectory>
-                    <jMeterTestFile>src/test/jmeter/learning.jmx</jMeterTestFile>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>jmeter-tests</id>
-                        <goals>
-                            <goal>jmeter</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>theaa.payment</groupId>
+  <artifactId>payment</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.lazerycode.jmeter</groupId>
+        <artifactId>jmeter-maven-plugin</artifactId>
+        <version>2.9.0</version>
+        <configuration>
+          <resultsFileFormat>csv</resultsFileFormat>
+          <testResultsTimestamp>false</testResultsTimestamp>
+          <!--script
+          name passed in yml 
+          UnresolvedMavenProperty -->
+          <jMeterTestFile>${JmeterScript}.jmx</jMeterTestFile>
+          <propertiesUser>
+            <jmeter.save.saveservice.print_field_names>true</jmeter.save.saveservice.print_field_names>
+            <jmeter.save.saveservice.successful>true</jmeter.save.saveservice.successful>
+            <jmeter.save.saveservice.label>true</jmeter.save.saveservice.label>
+            <jmeter.save.saveservice.time>true</jmeter.save.saveservice.time>
+            <jmeter.save.saveservice.subresults>false</jmeter.save.saveservice.subresults>
+            <jmeter.save.saveservice.assertion_results>all</jmeter.save.saveservice.assertion_results>
+            <jmeter.save.saveservice.assertion_results_failure_message>true</jmeter.save.saveservice.assertion_results_failure_message>
+            <jmeter.save.saveservice.bytes>true</jmeter.save.saveservice.bytes>
+            <jmeter.save.saveservice.label>true</jmeter.save.saveservice.label>
+            <jmeter.save.saveservice.latency>true</jmeter.save.saveservice.latency>
+            <jmeter.save.saveservice.response_code>true</jmeter.save.saveservice.response_code>
+            <jmeter.save.saveservice.response_message>true</jmeter.save.saveservice.response_message>
+            <jmeter.save.saveservice.successful>true</jmeter.save.saveservice.successful>
+            <jmeter.save.saveservice.thread_counts>true</jmeter.save.saveservice.thread_counts>
+            <jmeter.save.saveservice.thread_name>true</jmeter.save.saveservice.thread_name>
+            <jmeter.save.saveservice.time>true</jmeter.save.saveservice.time>
+          </propertiesUser>
+          <errorRateThresholdInPercent>1</errorRateThresholdInPercent>
+        <generateReports>true</generateReports>
+        </configuration>
+		<executions>
+          <!-- Generate JMeter configuration -->
+          <execution>
+            <id>configuration</id>
+            <goals>
+              <goal>configure</goal>
+            </goals>
+          </execution>
+          <!-- Run JMeter tests -->
+          <execution>
+            <id>jmeter-tests</id>
+            <goals>
+              <goal>jmeter</goal>
+            </goals>
+          </execution>
+          <!-- Fail build on errors in test -->
+          <execution>
+            <id>jmeter-check-results</id>
+            <goals>
+              <goal>results</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>uk.co.automatictester</groupId>
+        <artifactId>jmeter-lightning-maven-plugin</artifactId>
+        <version>2.4.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>lightning</goal>
+            </goals>
+            <configuration>
+              <mode>verify</mode>
+              <testSetXml>src/test/resources/verification.xml</testSetXml>
+              <jmeterCsv>${project.basedir}/target/jmeter/results/learning.csv</jmeterCsv>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.8</version>
+        <executions>
+          <execution>
+            <id>compile</id>
+            <phase>compile</phase>
+            <configuration>
+              <target>
+                <copy todir="${basedir}/target/jmeter/lib/ext">
+                  <fileset dir="${basedir}/src/test/resources">
+                    <include name="*.jar" />
+                  </fileset>
+                </copy>
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>pre-site</id>
+            <phase>pre-site</phase>
+            <configuration>
+              <!--updating
+              reporting configuration variable for dashboard -->
+              <target>
+                <delete dir="${basedir}/target/jmeter/results/dashboard" />
+                <mkdir dir="${basedir}/target/jmeter/results/dashboard" />
+                <delete file="${basedir}/target/jmeter/bin/reportgenerator.properties" />
+                <copy file="${basedir}/src/test/resources/reportgenerator.properties"
+                  tofile="${basedir}/target/jmeter/bin/reportgenerator.properties" />
+                <!--copy
+                todir="${basedir}/target/jmeter/bin/report-template">
+                                    <fileset dir="${basedir}/src/test/resources/report-template" />
+                                </copy-->
+                <delete file="${basedir}/target/jmeter/results/tmp/learning.csv/" />
+                <copy todir="${basedir}/target/jmeter/results/tmp">
+                  <fileset dir="${basedir}/target/jmeter/results/">
+                    <include name="**/*.csv" />
+                  </fileset>
+                  <globmapper from="*" to="learning.csv" />
+                </copy>
+                <java jar="${basedir}/target/jmeter/bin/ApacheJMeter-5.1.1.jar" fork="true">
+                  <arg value="-g" />
+                  <!--<arg
+                  value="${basedir}/target/jmeter/results/FraudAnalyticsOpPortalEarlyPerfTest.csv"
+                  />-->
+                  <arg value="${basedir}/target/jmeter/results/tmp/learning.csv" />
+                  <arg value="-o" />
+                  <arg value="${basedir}/target/jmeter/results/dashboard/" />
+                </java>
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>
