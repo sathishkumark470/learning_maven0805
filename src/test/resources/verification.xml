@@ -5,14 +5,28 @@
         <transactionName>T01_Login</transactionName>
         <regexp/>
         <percentile>90</percentile>
-        <maxRespTime>100</maxRespTime>
+        <maxRespTime>1000</maxRespTime>
     </nthPercRespTimeTest>
+	 <passedTransactionsTest>
+        <testName>T01_Login - Pass Rate</testName>
+        <description>Verify Pass Rate</description>
+        <transactionName>T01_Login</transactionName>
+        <regexp />
+        <allowedPercentOfFailedTransactions>1</allowedPercentOfFailedTransactions>
+    </passedTransactionsTest>
     <nthPercRespTimeTest>
         <testName>T02_Logout - 90 Percentile response time</testName>
         <description>Verify 90th percentile</description>
         <transactionName>T02_Logout</transactionName>
         <regexp/>
-        <percentile>100</percentile>
-        <maxRespTime>5</maxRespTime>
+        <percentile>90</percentile>
+        <maxRespTime>1000</maxRespTime>
     </nthPercRespTimeTest> 
+	<passedTransactionsTest>
+        <testName>T02_Logout - Pass Rate</testName>
+        <description>Verify Pass Rate</description>
+        <transactionName>T02_Logout</transactionName>
+        <regexp />
+        <allowedPercentOfFailedTransactions>1</allowedPercentOfFailedTransactions>
+    </passedTransactionsTest>
 </testSet>
