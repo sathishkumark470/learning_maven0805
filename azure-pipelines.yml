@@ -30,6 +30,8 @@ stages:
         artifact: 'JMeterResults'
       condition: always()
 
+
+
     - task: PublishTestResults@2
       inputs:
         testResultsFormat: 'JUnit'
