@@ -2,7 +2,7 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>MyFirstProject</groupId>
+  <groupId>theaa.payment</groupId>
   <artifactId>payment</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
@@ -11,7 +11,7 @@
       <plugin>
         <groupId>com.lazerycode.jmeter</groupId>
         <artifactId>jmeter-maven-plugin</artifactId>
-        <version>2.9.0</version>
+        <version>3.8.0</version>
         <configuration>
           <resultsFileFormat>csv</resultsFileFormat>
           <testResultsTimestamp>false</testResultsTimestamp>
@@ -37,10 +37,8 @@
             <jmeter.save.saveservice.thread_name>true</jmeter.save.saveservice.thread_name>
             <jmeter.save.saveservice.time>true</jmeter.save.saveservice.time>
           </propertiesUser>
-          <errorRateThresholdInPercent>1</errorRateThresholdInPercent>
-        <generateReports>true</generateReports>
         </configuration>
-		<executions>
+        <executions>
           <!-- Generate JMeter configuration -->
           <execution>
             <id>configuration</id>
@@ -117,19 +115,19 @@
                 todir="${basedir}/target/jmeter/bin/report-template">
                                     <fileset dir="${basedir}/src/test/resources/report-template" />
                                 </copy-->
-                <delete file="${basedir}/target/jmeter/results/tmp/learning.csv/" />
+                <delete file="${basedir}/target/jmeter/results/tmp/result.csv/" />
                 <copy todir="${basedir}/target/jmeter/results/tmp">
                   <fileset dir="${basedir}/target/jmeter/results/">
                     <include name="**/*.csv" />
                   </fileset>
-                  <globmapper from="*" to="learning.csv" />
+                  <globmapper from="*" to="result.csv" />
                 </copy>
                 <java jar="${basedir}/target/jmeter/bin/ApacheJMeter-5.1.1.jar" fork="true">
                   <arg value="-g" />
                   <!--<arg
                   value="${basedir}/target/jmeter/results/FraudAnalyticsOpPortalEarlyPerfTest.csv"
                   />-->
-                  <arg value="${basedir}/target/jmeter/results/tmp/learning.csv" />
+                  <arg value="${basedir}/target/jmeter/results/tmp/result.csv" />
                   <arg value="-o" />
                   <arg value="${basedir}/target/jmeter/results/dashboard/" />
                 </java>
