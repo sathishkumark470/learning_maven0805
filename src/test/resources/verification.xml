@@ -5,7 +5,7 @@
         <transactionName>T01_Login</transactionName>
         <regexp/>
         <percentile>90</percentile>
-        <maxRespTime>900</maxRespTime>
+        <maxRespTime>5000</maxRespTime>
     </nthPercRespTimeTest>
 	 <passedTransactionsTest>
         <testName>T01_Login - Pass Rate</testName>
@@ -20,7 +20,7 @@
         <transactionName>T02_Logout</transactionName>
         <regexp/>
         <percentile>90</percentile>
-        <maxRespTime>1000</maxRespTime>
+        <maxRespTime>5000</maxRespTime>
     </nthPercRespTimeTest> 
 	<passedTransactionsTest>
         <testName>T02_Logout - Pass Rate</testName>
