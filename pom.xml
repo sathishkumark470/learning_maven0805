@@ -122,7 +122,7 @@
                   </fileset>
                   <globmapper from="*" to="result.csv" />
                 </copy>
-                <java jar="${basedir}/target/jmeter/bin/ApacheJMeter-5.1.1.jar" fork="true">
+                <java jar="${basedir}/target/jmeter/bin/ApacheJMeter-5.6.2.jar" fork="true">
                   <arg value="-g" />
                   <!--<arg
                   value="${basedir}/target/jmeter/results/FraudAnalyticsOpPortalEarlyPerfTest.csv"
