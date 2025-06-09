@@ -12,12 +12,12 @@ stages:
   jobs:
   - job: PerformanceTest
     steps:
-    - task: Maven@3
+    - task: Maven@4
       inputs:
         mavenPomFile: 'pom.xml'
         goals: 'clean compile verify -DJmeterScript=learning'
 
-    - task: Maven@3
+    - task: Maven@4
       inputs:
         mavenPomFile: 'pom.xml'
         goals: 'pre-site'
