@@ -40,6 +40,9 @@
             <jmeter.save.saveservice.thread_name>true</jmeter.save.saveservice.thread_name>
             <jmeter.save.saveservice.time>true</jmeter.save.saveservice.time>
           </propertiesUser>
+    		  <!-- Disable the below lines if you don't want to generate the reports in your local-->
+          <errorRateThresholdInPercent>1</errorRateThresholdInPercent>
+	        <generateReports>true</generateReports>
         </configuration>
         <executions>
           <!-- Generate JMeter configuration -->
